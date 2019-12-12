@@ -10,19 +10,42 @@ const UsersRouter = express.Router();
 const jsonBodyParser = express.json()
 
 UsersRouter
+  .route("/:id")
+  .get((req, res, next) => {
+    const db = req.app.get('db');
+    const {id} = req.params;
+    UsersService.getById(db,id)
+   .then(users =>{ 
+       console.log('users= ', users)
+       res.status(200).json(users)
+     })
+   .catch(next)
+   })
+  .delete((req, res, next) => {
+    const db = req.app.get('db');
+    const {id} = req.params;
+    UsersService.delete(db, id)
+    .then( users =>{
+      res.status(204).end()
+    })
+    .catch(next)
+  });
+UsersRouter
   .route('/')
-  .get(jsonBodyParser, (req, res, next) => {
+  .get( (req, res, next) => {
    const db = req.app.get('db');
-   try{
-     const users = UsersService.get(db)
-     res.json(users)
-   } catch (err) {
-     next(err)
-   }
+   UsersService.getAll(db)
+  .then(users =>{ 
+      console.log('users= ', users)
+      res.status(200).json(users)
+    })
+  .catch(
+    next
+  )
   })
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
-    const { email } = req.body;
+    const { email, password } = req.body;
     if (!email){
       return res
         .status(400)
@@ -33,29 +56,20 @@ UsersRouter
         .status(400)
         .send('Password required');
     }
-    //sanitize new recipe? 
-    // const newRecipe = sanitizeFields({name})
-    res.send('All validation passed');
-    try{
-      const users = UsersService.insert(db, newUser);
-      res
-        .status(201)
-        .location(path.posix.join(req.originalUrl, `/${users.id}`))
-        .json(users);
-    } catch (err){
-      next (err);
-    }
-  });
 
-  UsersRouter
-.delete( (req, res, next) => {
-  try{
-     UsersService.delete(req.app.get('db'), req.params.recipes_id);
-    res.status(200).json({});
-  } catch (err) {
-    next(err);
-  } 
-});
+    let newUser= {email, password}
+
+    UsersService.post(db, newUser)
+      .then(users=>{
+        console.log('users: ', users)
+        res.status(201).json(users)
+      })
+      
+    .catch (next)
+  });
+  
+
+
 
 
 module.exports = UsersRouter
