@@ -1,8 +1,8 @@
 const xss = require('xss')
 
 const UsersService = {
-  getById(db, id) {
-    
+  get(db) {
+    return db.select('*').from('users')
   }
 }
 

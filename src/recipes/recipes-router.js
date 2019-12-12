@@ -13,9 +13,9 @@ const jsonBodyParser = express.json()
   //First, get request to fetch recipe data  
 recipesRouter
   .route('/:recipe_id')
-  .all(async (req, res, next)=>{
+  .all( (req, res, next)=>{
     try{
-      const recipe = await RecipesService.findById(req.app.get('db'), req.params.recipe_id);
+      const recipe =  RecipesService.findById(req.app.get('db'), req.params.recipe_id);
       if(!recipe){
         return next({status: 404, message: 'Recipe doesn\'t exist'});
       }
@@ -25,11 +25,11 @@ recipesRouter
       next(err);
     }
   })
-  //jsonBodyParse or async? 
+  //jsonBodyParse or ? 
   .get(jsonBodyParser, (req, res, next) => {
       const db = req.app.get('db');
       try {
-        const recipes = await 
+        const recipes =  
         //.list(db)???
         RecipesService.recipesRouter(db)
         res.json(recipes)
@@ -39,7 +39,7 @@ recipesRouter
   })
   
   //Second, post request to add user with email 
-  //add async?
+  //add ?
   //jsonBodyParser vs jsonParser?
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
@@ -58,7 +58,7 @@ recipesRouter
     // const newRecipe = sanitizeFields({name})
     res.send('All validation passed');
     try{
-      const recipe = await RecipesService.insert(db, newRecipe);
+      const recipe =  RecipesService.insert(db, newRecipe);
       res
         .status(201)
         .location(path.posix.join(req.originalUrl, `/${recipe.id}`))
@@ -87,9 +87,9 @@ recipesRouter
 });
 
 recipesRouter
-.delete(async, (req, res, next) => {
+.delete( (req, res, next) => {
   try{
-    await RecipesService.delete(req.app.get('db'), req.params.recipes_id);
+     RecipesService.delete(req.app.get('db'), req.params.recipes_id);
     res.status(200).json({});
   } catch (err) {
     next(err);

@@ -18,7 +18,6 @@ app.use(morgan((NODE_ENV === 'production')
   skip: () => NODE_ENV === 'test',
 }))
 
-app.use(morgan(morganOption))
 app.use(cors())
 app.use(helmet())
 app.use(express.json())
@@ -39,7 +38,6 @@ if (NODE_ENV !== 'production') {
 
 app.use('/api/users', usersRouter)
 app.use('/api/recipes', recipesRouter)
-app.use(errorHandler)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
