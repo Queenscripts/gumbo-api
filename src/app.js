@@ -1,22 +1,45 @@
+'use strict';
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
+const app = express()
 const usersRouter = require('./users/users-router')
 const recipesRouter = require('./recipes/recipes-router')
 
-const app = express()
+const winston = require('winston');
 
-app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
+
+app.use(morgan((NODE_ENV === 'production') 
+? 'tiny' 
+: 'common', {
   skip: () => NODE_ENV === 'test',
 }))
+
+app.use(morgan(morganOption))
 app.use(cors())
 app.use(helmet())
+app.use(express.json())
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({ filename: 'info.log' })
+  ]
+});
+
+if (NODE_ENV !== 'production') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.simple()
+  }));
+}
 
 app.use('/api/users', usersRouter)
 app.use('/api/recipes', recipesRouter)
+app.use(errorHandler)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
@@ -32,8 +55,5 @@ app.use(function errorHandler(error, req, res, next) {
 app.get('users', (req, res)=>{
     res.json()
   })
-  
-  app.listen(8000, () =>{
-    console.log('Server started on PORT 8000');
-  })
+
 module.exports = app
