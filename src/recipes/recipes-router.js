@@ -10,68 +10,65 @@ const RecipesService = require('./recipes-service');
 const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
 
+//goes to recipe puppy 
+recipesRouter
+  .route('/fetch')
+  .get((req, rex, next)=>{
+
+  })
+
   //First, get request to fetch recipe data  
 recipesRouter
-  .route('/:recipe_id')
-  .all( (req, res, next)=>{
-    try{
-      const recipe =  RecipesService.findById(req.app.get('db'), req.params.recipe_id);
-      if(!recipe){
-        return next({status: 404, message: 'Recipe doesn\'t exist'});
-      }
-      res.recipe = recipe;
-      next();
-    } catch (err) {
-      next(err);
-    }
-  })
-  //jsonBodyParse or ? 
-  .get(jsonBodyParser, (req, res, next) => {
+  .route('/')
+ 
+  .get((req, res, next) => {
       const db = req.app.get('db');
-      try {
-        const recipes =  
-        //.list(db)???
-        RecipesService.recipesRouter(db)
-        res.json(recipes)
-      } catch (err) {
-        next(err);
-      }
+      RecipesService.getAllRecipes(db)
+      .then(recipes => {
+        console.log('recipes', recipes)
+        res.status(200).json(recipes)
+      })
+      .catch(
+        next
+      )
   })
-  
-  //Second, post request to add user with email 
-  //add ?
-  //jsonBodyParser vs jsonParser?
+ 
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
-    const { recipe } = req.body;
-    if (!recipe){
+    const {thumbnail, title, ingredients, recipeurl } = req.body;
+    if (!recipeurl){
       return res
         .status(400)
-        .send ('recipe does not exist');
+        .send ('recipeurl does not exist');
     }
-    // if (!password) {
-    //   return res
-    //     .status(400)
-    //     .send('Password required');
-    // }
-    //sanitize new recipe? 
-    // const newRecipe = sanitizeFields({name})
-    res.send('All validation passed');
-    try{
-      const recipe =  RecipesService.insert(db, newRecipe);
-      res
-        .status(201)
-        .location(path.posix.join(req.originalUrl, `/${recipe.id}`))
-        .json(recipe);
-    } catch (err){
-      next (err);
+    if (!thumbnail){
+      return res
+        .status(400)
+        .send ('thumbnail does not exist');
     }
-  });
+    if (!title){
+      return res
+        .status(400)
+        .send ('title does not exist');
+    }
+    if (!ingredients){
+      return res
+        .status(400)
+        .send ('ingredients does not exist');
+    }
+    let newRecipe = {thumbnail, recipeurl, ingredients, title}
 
-recipesRouter
+    RecipesService.insertRecipe(db, newRecipe)
+    .then(recipes=>{
+      console.log('recipes: ', recipes)
+      res.status(201).json(recipes)
+    })
+    .catch(next)
+  })
+     
 .put(jsonBodyParser, (req, res, next) => {
   res
-    .send('POST request received.');
+  .send('POST request received.');
   const {newRecipe} = req.body
   if (!username) {
     return res
@@ -84,9 +81,8 @@ recipesRouter
       .status(400)
       .send('Password required');
   }
-});
+})
 
-recipesRouter
 .delete( (req, res, next) => {
   try{
      RecipesService.delete(req.app.get('db'), req.params.recipes_id);
@@ -95,5 +91,69 @@ recipesRouter
     next(err);
   } 
 });
+
+
+recipesRouter
+.route("/:id")
+.put(jsonBodyParser, (req, res, next)=>{
+  const db = req.app.get('db');
+  const {id} = req.params; 
+  const {thumbnail, recipeurl, ingredients, title} = req.body;
+  if (!recipeurl){
+    return res
+      .status(400)
+      .send ('recipeurl does not exist');
+  }
+  if (!thumbnail){
+    return res
+      .status(400)
+      .send ('thumbnail does not exist');
+  }
+  if (!title){
+    return res
+      .status(400)
+      .send ('title does not exist');
+  }
+  if (!ingredients){
+    return res
+      .status(400)
+      .send ('ingredients does not exist');
+  }
+
+  let newRecipe = {thumbnail, recipeurl, ingredients, title}
+
+
+  RecipesService.updateRecipe(db, id, newRecipe)
+    .then(recipes=>{
+      console.log('recipes:', recipes)
+      if(recipes == undefined){
+        res.status(404).json({error: "NOT FOUND"})
+      }
+      res.status(200).json(recipes)
+    })
+    .catch(next)
+})
+.delete((req, res, next)=>{
+  const db = req.app.get('db');
+  const {id} = req.params;
+  RecipesService.deleteRecipe(db, id)
+  .then( recipes=>{
+    res.status(204).end()
+  })
+  .catch(next)
+})
+.get((req, res, next) => {
+  const db = req.app.get('db');
+  const {id} = req.params;
+  RecipesService.getById(db, id)
+  .then(recipes =>{
+    console.log('recipes=', recipes)
+    if(recipes == undefined){
+      res.status(404).json({error: "NOT FOUND"})
+    }
+    res.status(200).json(recipes)
+  })
+  .catch(next)
+})
 
 module.exports = recipesRouter

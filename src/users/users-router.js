@@ -17,6 +17,9 @@ UsersRouter
     UsersService.getById(db,id)
    .then(users =>{ 
        console.log('users= ', users)
+       if(users == undefined){
+        res.status(404).json({error: "NOT FOUND"})
+      }
        res.status(200).json(users)
      })
    .catch(next)
@@ -26,6 +29,7 @@ UsersRouter
     const {id} = req.params;
     UsersService.delete(db, id)
     .then( users =>{
+      console.log('deleteusers: ', users)
       res.status(204).end()
     })
     .catch(next)
@@ -38,6 +42,9 @@ UsersRouter
   .then(users =>{ 
       console.log('users= ', users)
       res.status(200).json(users)
+      if(users == undefined){
+        res.status(404).json({error: "NOT FOUND"})
+      }
     })
   .catch(
     next
@@ -62,6 +69,9 @@ UsersRouter
     UsersService.post(db, newUser)
       .then(users=>{
         console.log('users: ', users)
+        if(users == undefined){
+          res.status(404).json({error: "NOT FOUND"})
+        }
         res.status(201).json(users)
       })
       
