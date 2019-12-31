@@ -10,19 +10,13 @@ const RecipesService = require('./recipes-service');
 const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
 
-//goes to recipe puppy 
-recipesRouter
-  .route('/fetch')
-  .get((req, rex, next)=>{
-
-  })
 
   //First, get request to fetch recipe data  
 recipesRouter
   .route('/')
- 
   .get((req, res, next) => {
       const db = req.app.get('db');
+      console.log('DB', db)
       RecipesService.getAllRecipes(db)
       .then(recipes => {
         console.log('recipes', recipes)
@@ -32,7 +26,6 @@ recipesRouter
         next
       )
   })
- 
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
     const {thumbnail, title, ingredients, recipeurl } = req.body;
@@ -65,7 +58,6 @@ recipesRouter
     })
     .catch(next)
   })
-     
 .put(jsonBodyParser, (req, res, next) => {
   res
   .send('POST request received.');
@@ -73,7 +65,7 @@ recipesRouter
   if (!username) {
     return res
       .status(400)
-      .send('Username required');
+      .send('Emailed required');
   }
   
   if (!password) {
@@ -120,8 +112,8 @@ recipesRouter
       .send ('ingredients does not exist');
   }
 
-  let newRecipe = {thumbnail, recipeurl, ingredients, title}
-
+  // thumbnail, 
+  let newRecipe = {recipeurl, ingredients, title}
 
   RecipesService.updateRecipe(db, id, newRecipe)
     .then(recipes=>{

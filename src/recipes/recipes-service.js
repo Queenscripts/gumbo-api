@@ -1,7 +1,6 @@
 const xss = require('xss')
 
 const RecipesService = {
-  
   getAllRecipes(db) {
     return db.select('*').from('recipes')
   },

@@ -1,0 +1,22 @@
+2019-12-24 18:56:16.613 PST [7416] LOG:  listening on IPv6 address "::1", port 5432
+2019-12-24 18:56:16.613 PST [7416] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-12-24 18:56:16.615 PST [7416] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-12-24 18:56:16.664 PST [7417] LOG:  database system was shut down at 2019-12-24 18:56:03 PST
+2019-12-24 18:56:16.706 PST [7416] LOG:  database system is ready to accept connections
+2019-12-24 19:02:54.017 PST [7624] FATAL:  role "gumbo" does not exist
+2019-12-24 19:07:20.490 PST [7699] FATAL:  role "dunder_mifflin" does not exist
+2019-12-24 19:07:28.550 PST [7701] FATAL:  role "dunder_mifflin" does not exist
+2019-12-24 19:07:47.376 PST [7705] FATAL:  role "dunder_mifflin" does not exist
+2019-12-24 19:31:06.696 PST [8011] FATAL:  role "gumbo" does not exist
+2019-12-25 04:33:49.808 PST [11146] FATAL:  role "gumbo" does not exist
+2019-12-25 04:33:50.660 PST [11147] FATAL:  role "gumbo" does not exist
+2019-12-25 04:34:06.456 PST [11150] FATAL:  role "gumbo" does not exist
+2019-12-25 04:34:07.275 PST [11151] FATAL:  role "gumbo" does not exist
+2019-12-25 04:34:07.932 PST [11152] FATAL:  role "gumbo" does not exist
+2019-12-25 04:34:08.082 PST [11153] FATAL:  role "gumbo" does not exist
+2019-12-25 04:34:09.456 PST [11154] FATAL:  role "gumbo" does not exist
+2019-12-25 05:14:14.033 PST [7416] LOG:  received fast shutdown request
+2019-12-25 05:14:14.035 PST [7416] LOG:  aborting any active transactions
+2019-12-25 05:14:14.041 PST [7416] LOG:  background worker "logical replication launcher" (PID 7423) exited with exit code 1
+2019-12-25 05:14:14.042 PST [7418] LOG:  shutting down
+2019-12-25 05:14:14.060 PST [7416] LOG:  database system is shut down
