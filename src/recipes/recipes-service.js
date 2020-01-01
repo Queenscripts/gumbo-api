@@ -22,6 +22,7 @@ const RecipesService = {
       .delete()
   },
   updateRecipe(db, id, newRecipeList) {
+    console.log('inside updateRecipe', id, newRecipeList)
     return db('recipes')
       .where({ id })
       .update(newRecipeList)

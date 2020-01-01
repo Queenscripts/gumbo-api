@@ -57,32 +57,7 @@ recipesRouter
       res.status(201).json(recipes)
     })
     .catch(next)
-  })
-.put(jsonBodyParser, (req, res, next) => {
-  res
-  .send('POST request received.');
-  const {newRecipe} = req.body
-  if (!username) {
-    return res
-      .status(400)
-      .send('Emailed required');
-  }
-  
-  if (!password) {
-    return res
-      .status(400)
-      .send('Password required');
-  }
-})
-
-.delete( (req, res, next) => {
-  try{
-     RecipesService.delete(req.app.get('db'), req.params.recipes_id);
-    res.status(200).json({});
-  } catch (err) {
-    next(err);
-  } 
-});
+  });
 
 
 recipesRouter
@@ -90,37 +65,29 @@ recipesRouter
 .put(jsonBodyParser, (req, res, next)=>{
   const db = req.app.get('db');
   const {id} = req.params; 
-  const {thumbnail, recipeurl, ingredients, title} = req.body;
-  if (!recipeurl){
-    return res
-      .status(400)
-      .send ('recipeurl does not exist');
-  }
-  if (!thumbnail){
-    return res
-      .status(400)
-      .send ('thumbnail does not exist');
-  }
+  const {ingredients, title} = req.body;
   if (!title){
-    return res
+     res
       .status(400)
       .send ('title does not exist');
   }
   if (!ingredients){
-    return res
+     res
       .status(400)
       .send ('ingredients does not exist');
   }
 
   // thumbnail, 
-  let newRecipe = {recipeurl, ingredients, title}
-
+  let newRecipe = {ingredients, title}
+  console.log('call recipes service updateRecipe')
   RecipesService.updateRecipe(db, id, newRecipe)
     .then(recipes=>{
-      console.log('recipes:', recipes)
+      console.log('received data back from updateRecipe', recipes)
       if(recipes == undefined){
+        console.log('recipes undefined')
         res.status(404).json({error: "NOT FOUND"})
       }
+      console.log('sending status 200')
       res.status(200).json(recipes)
     })
     .catch(next)
