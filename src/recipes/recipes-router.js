@@ -2,10 +2,11 @@
 const path = require('path');
 const express = require('express');
 const RecipesService = require('./recipes-service');
-//sanitize fields?
-// const {
-//   requireAuth
-// } = require('../middleware/basic-auth')
+
+// sanitize fields?
+const {
+  requireAuth
+} = require('../middleware/jwt-auth')
 
 const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
@@ -14,6 +15,7 @@ const jsonBodyParser = express.json()
   //First, get request to fetch recipe data  
 recipesRouter
   .route('/')
+  // .all(requireAuth)
   .get((req, res, next) => {
       const db = req.app.get('db');
       console.log('DB', db)
@@ -62,6 +64,7 @@ recipesRouter
 
 recipesRouter
 .route("/:id")
+// .all(requireAuth)
 .put(jsonBodyParser, (req, res, next)=>{
   const db = req.app.get('db');
   const {id} = req.params; 

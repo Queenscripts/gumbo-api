@@ -11,6 +11,7 @@ const usersRouter = require('./users/users-router')
 const recipesRouter = require('./recipes/recipes-router')
 const recipesApi = require('./recipes-api/recipes-api-router')
 
+const authRouter = require('./auth/auth-router')
 const winston = require('winston');
 
 
@@ -20,9 +21,6 @@ app.use(morgan((NODE_ENV === 'production')
   skip: () => NODE_ENV === 'test',
 }))
 
-app.use(cors())
-app.use(helmet())
-app.use(express.json())
 
 const logger = winston.createLogger({
   level: 'info',
@@ -37,7 +35,11 @@ if (NODE_ENV !== 'production') {
     format: winston.format.simple()
   }));
 }
+app.use(cors())
+app.use(helmet())
+app.use(express.json())
 
+app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/recipes', recipesRouter)
 app.use('/recipes-api', recipesApi)
@@ -60,17 +62,12 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res, next) {
-  console.log('hello')
+  res.status(200).json({
+    status: "up!"
+  })
+  console.log('gumbo is alive')
   // Handle the get for this route
 });
 
-app.post('/', function(req, res, next) {
- // Handle the post for this route
-});
-
-
-app.get('users', (req, res)=>{
-    res.json()
-  })
 
 module.exports = app

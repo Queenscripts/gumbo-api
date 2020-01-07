@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "postgrator --config postgrator-config.js",
     "start": "node src/server.js",
-    "dev": "concurrently \"npm run server src/server.js\" \"npm run client\"",
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
     "server": "nodemon server"
@@ -24,7 +24,7 @@
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.20.4",
+    "knex": "^0.20.6",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.1",
     "pg": "^7.14.0",

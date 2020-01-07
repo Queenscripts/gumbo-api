@@ -63,23 +63,32 @@ UsersRouter
         .status(400)
         .send('Password required');
     }
-
-    let newUser= {email, password}
-
-    UsersService.post(db, newUser)
-      .then(users=>{
-        console.log('users: ', users)
-        if(users == undefined){
-          res.status(404).json({error: "NOT FOUND"})
-        }
-        res.status(201).json(users)
+    UsersService.hasUserWithEmail(
+      db, 
+      email
+    )
+      .then(hasUserWithEmail => {
+        if (hasUserWithEmail)
+          return res.status(400).json({error: 'Email taken'})
+        return UsersService.hashPassword(password)
+        .then(hashedPassword => {
+          const newUser ={
+            email, 
+            password: hashedPassword,
+            date_created: 'now()'
+          }
+           return UsersService.post(
+             db, 
+             newUser
+           )
+           .then (user =>{
+             res.status(201)
+             .json(UsersService.serializeUser(user))
+           })
+        })
       })
-      
     .catch (next)
   });
   
-
-
-
 
 module.exports = UsersRouter
