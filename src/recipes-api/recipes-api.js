@@ -8,7 +8,7 @@ class RecipeApi {
        }).then((res)=>{
            callback(res);
        }).catch((error)=>{
-           console.log({error: 'Could not reach Recipes API'});
+           //TODO figure out what to do when there's error
         });
     }
 }
@@ -21,7 +21,7 @@ class RecipeApi2 {
        }).then((res)=>{
            callback(res);
        }).catch((error)=>{
-           console.log({error: 'Could not reach Recipes API'});
+           //TODO figure out what to do when there's error
         });
     }
 }

@@ -28,7 +28,6 @@ authRouter
         return res.status(400).json({
           error: 'Incorrect email or password',
         })
-        console.log('USER', dbUser.email, dbUser.password)
         AuthService.comparePasswords(
           loginUser.password,
           dbUser.password
@@ -43,7 +42,6 @@ authRouter
         const payload = {
           user_id: dbUser.id
         }
-        console.log('sub, payload', sub, payload)
         res.send({
           authToken: AuthService.createJwt(sub, payload),
         })

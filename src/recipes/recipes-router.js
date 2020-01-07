@@ -3,7 +3,6 @@ const path = require('path');
 const express = require('express');
 const RecipesService = require('./recipes-service');
 
-// sanitize fields?
 const {
   requireAuth
 } = require('../middleware/jwt-auth')
@@ -11,17 +10,14 @@ const {
 const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
 
-
   //First, get request to fetch recipe data  
 recipesRouter
   .route('/')
-  // .all(requireAuth)
+  .all(requireAuth)
   .get((req, res, next) => {
       const db = req.app.get('db');
-      console.log('DB', db)
       RecipesService.getAllRecipes(db)
       .then(recipes => {
-        console.log('recipes', recipes)
         res.status(200).json(recipes)
       })
       .catch(
@@ -55,7 +51,6 @@ recipesRouter
 
     RecipesService.insertRecipe(db, newRecipe)
     .then(recipes=>{
-      console.log('recipes: ', recipes)
       res.status(201).json(recipes)
     })
     .catch(next)
@@ -64,7 +59,7 @@ recipesRouter
 
 recipesRouter
 .route("/:id")
-// .all(requireAuth)
+.all(requireAuth)
 .put(jsonBodyParser, (req, res, next)=>{
   const db = req.app.get('db');
   const {id} = req.params; 
@@ -80,17 +75,12 @@ recipesRouter
       .send ('ingredients does not exist');
   }
 
-  // thumbnail, 
   let newRecipe = {ingredients, title}
-  console.log('call recipes service updateRecipe')
   RecipesService.updateRecipe(db, id, newRecipe)
     .then(recipes=>{
-      console.log('received data back from updateRecipe', recipes)
       if(recipes == undefined){
-        console.log('recipes undefined')
         res.status(404).json({error: "NOT FOUND"})
       }
-      console.log('sending status 200')
       res.status(200).json(recipes)
     })
     .catch(next)
@@ -109,7 +99,6 @@ recipesRouter
   const {id} = req.params;
   RecipesService.getById(db, id)
   .then(recipes =>{
-    console.log('recipes=', recipes)
     if(recipes == undefined){
       res.status(404).json({error: "NOT FOUND"})
     }

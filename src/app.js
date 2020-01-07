@@ -42,7 +42,7 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/recipes', recipesRouter)
-app.use('/recipes-api', recipesApi)
+app.use('/api/recipes-api', recipesApi)
 app.use(function errorHandler(error, req, res, next) {
   let response
   if (NODE_ENV === 'production') {
@@ -55,8 +55,8 @@ app.use(function errorHandler(error, req, res, next) {
 })
 
 app.use(function(req, res, next) {
-  // res.header("Access-Control-Allow-Origin", "YOUR-DOMAIN.TLD"); 
-  // update to match the domain you will make the request from
+
+  // TODO update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers","Access-Control-Allow-Origin", "Origin, X-Requested-With, Content-Type, Authorization, Accept");
   next();
 });
@@ -65,8 +65,6 @@ app.get('/', function(req, res, next) {
   res.status(200).json({
     status: "up!"
   })
-  console.log('gumbo is alive')
-  // Handle the get for this route
 });
 
 
