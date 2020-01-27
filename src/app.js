@@ -2,9 +2,7 @@
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
-let pg = require('pg')
 const cors = require('cors')
-const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const app = express()
 const usersRouter = require('./users/users-router')
@@ -12,8 +10,6 @@ const recipesRouter = require('./recipes/recipes-router')
 const recipesApi = require('./recipes-api/recipes-api-router')
 
 const authRouter = require('./auth/auth-router')
-const winston = require('winston');
-
 
 app.use(morgan((NODE_ENV === 'production') 
 ? 'tiny' 
@@ -21,22 +17,7 @@ app.use(morgan((NODE_ENV === 'production')
   skip: () => NODE_ENV === 'test',
 }))
 
-
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: 'info.log' })
-  ]
-});
-
-if (NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple()
-  }));
-}
 app.use(cors())
-app.use(helmet())
 app.use(express.json())
 
 app.use('/api/auth', authRouter)
