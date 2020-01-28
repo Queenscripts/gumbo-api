@@ -2,6 +2,10 @@
   "name": "gumbo-api",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "npm": "6.x",
+    "node": "13.7.0"
+  },
   "main": "index.js",
   "scripts": {
     "migrate": "postgrator --config postgrator-config.js",
