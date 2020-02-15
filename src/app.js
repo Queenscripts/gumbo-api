@@ -23,7 +23,7 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/recipes', recipesRouter)
-app.use('/api/recipes-api', recipesApi)
+// app.use('/api/recipes-api', recipesApi)
 app.use(function errorHandler(error, req, res, next) {
   let response
   if (NODE_ENV === 'production') {
