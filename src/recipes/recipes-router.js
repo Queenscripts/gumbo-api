@@ -1,5 +1,5 @@
 'use strict';
-const path = require('path');
+// const path = require('path');
 const express = require('express');
 const RecipesService = require('./recipes-service');
 
@@ -27,7 +27,6 @@ recipesRouter
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
     const {thumbnail, title, ingredients, recipeurl } = req.body;
-    console.log('REQBODY', req.body)
     if (!recipeurl){
       return res
         .status(400)

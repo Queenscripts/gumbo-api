@@ -2,9 +2,9 @@
 const request = require('request-promise');
 
 class RecipeApi {
-    static getRecipe(ingredients, flavor, callback){
+    static getRecipe(callback){
        request({
-           uri: `http://www.recipepuppy.com/api/?i=${ingredients}%2C+&q=${flavor}/&minIngs=&maxIngs=&minRating=&minRates=20&onlyImages=1`,
+           uri: `https://warm-castle-96285.herokuapp.com/`,
            json: true
        }).then((res)=>{
            callback(res);
