@@ -27,16 +27,16 @@ recipesRouter
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
     const {thumbnail, title, ingredients, recipeurl } = req.body;
-    if (!recipeurl){
-      return res
-        .status(400)
-        .send ('recipeurl does not exist');
-    }
-    if (!thumbnail){
-      return res
-        .status(400)
-        .send ('thumbnail does not exist');
-    }
+    // if (!recipeurl){
+    //   return res
+    //     .status(400)
+    //     .send ('recipeurl does not exist');
+    // }
+    // if (!thumbnail){
+    //   return res
+    //     .status(400)
+    //     .send ('thumbnail does not exist');
+    // }
     if (!title){
       return res
         .status(400)
