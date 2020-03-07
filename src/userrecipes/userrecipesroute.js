@@ -1,6 +1,6 @@
 'use strict';
 const express = require('express');
-const useruserRecipesService vice  = require('./useruserRecipesService vice');
+const useruserRecipesService = require('./useruserRecipesService vice');
 
 const {
   requireAuth
