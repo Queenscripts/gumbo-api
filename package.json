@@ -1,7 +1,7 @@
 {
   "name": "gumbo-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Search the Gumbo API databse for recipes, as well as recipes users have submitted via the Gumbo app.",
   "engines": {
     "npm": "6.x",
     "node": "13.7.0"
@@ -25,13 +25,14 @@
   "dependencies": {
     "audit": "0.0.6",
     "bcryptjs": "^2.4.3",
+    "config": "^3.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.20.8",
+    "knex": "^0.20.11",
     "morgan": "^1.9.1",
-    "nodemon": "^2.0.1",
+    "nodemon": "^2.0.2",
     "pg": "^7.14.0",
     "psql": "0.0.1",
     "request": "^2.88.0",
@@ -43,5 +44,16 @@
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
     "postgrator-cli": "^3.2.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QueenShabazz/gumbo-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/QueenShabazz/gumbo-api/issues"
+  },
+  "homepage": "https://github.com/QueenShabazz/gumbo-api#readme"
 }

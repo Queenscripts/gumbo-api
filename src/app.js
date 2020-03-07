@@ -7,6 +7,8 @@ const { NODE_ENV } = require('./config')
 const app = express()
 const usersRouter = require('./users/users-router')
 const recipesRouter = require('./recipes/recipes-router')
+const userrecipesRouter = require('./userrecipes/userrecipesroute')
+
 // const recipesApi = require('./recipes-api/recipes-api-router')
 
 const authRouter = require('./auth/auth-router')
@@ -23,6 +25,7 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/recipes', recipesRouter)
+app.use('/api/userrecipes', userrecipesRouter)
 // app.use('/api/recipes-api', recipesApi)
 app.use(function errorHandler(error, req, res, next) {
   let response

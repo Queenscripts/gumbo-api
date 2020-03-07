@@ -1,6 +1,7 @@
 const knex = require('knex')
 const app = require('./app')
 const { PORT, DB_URL } = require('./config')
+const HOST = 'localhost';
 
 
 const db = knex({
@@ -10,6 +11,7 @@ const db = knex({
 
 app.set('db', db)
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(`Server listening at http://localhost:${PORT}`)
 })
+

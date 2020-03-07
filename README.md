@@ -20,7 +20,6 @@ create your testdb: create db -U <username> gumbo-test
 ```
 Edit the contents of the package.json to use NEW-PROJECT-NAME instead of "name": "gumbo",
 
-`This api requires a valid Youtube API key`
 
 ## Routes
 

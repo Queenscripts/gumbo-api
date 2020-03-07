@@ -5,5 +5,5 @@
 INSERT INTO users
   (email, password)
   VALUES
-    ('test@testing.com', '920-840-6056');
+    ('test@testing.com', 'test');
   
