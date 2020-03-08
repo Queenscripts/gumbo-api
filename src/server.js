@@ -11,14 +11,15 @@ exports.up = function (knex) {
   return knex.schema
   .hasTable('userrecipes')
   .then(function(exists){
-    if(!exists){
+   if(!exists){
       return knex
-  .createTable('userrecipes', function (table) {
-  table.increments();
-  table.string('thumbnail');
-  table.string('title');
-  table.string('ingredients');
+    .createTable('userrecipes', function (table) {
+    table.increments();
+    table.string('thumbnail');
+    table.string('title');
+    table.string('ingredients');
     table.string('recipeurl');
+    })
   }
  })
 };
