@@ -7,15 +7,21 @@ const db = knex({
   connection: DB_URL,
 })
 
-
-knex.schema.createTable('userrecipes', function (table) {
+exports.up = function (knex) {
+  return knex.schema
+  .hasTable('userrecipes')
+  .then(function(exists){
+    if(!exists){
+      return knex
+  .createTable('userrecipes', function (table) {
   table.increments();
   table.string('thumbnail');
   table.string('title');
   table.string('ingredients');
     table.string('recipeurl');
-
-})
+  })
+ })
+};
 
 app.set('db', db)
 
