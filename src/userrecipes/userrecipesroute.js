@@ -26,16 +26,6 @@ recipesRouter
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
     const {thumbnail, title, ingredients, recipeurl } = req.body;
-    if (!title){
-      return res
-        .status(400)
-        .send ('title does not exist');
-    }
-    if (!ingredients){
-      return res
-        .status(400)
-        .send ('ingredients does not exist');
-    }
     let newRecipe = {thumbnail, recipeurl, ingredients, title}
 
     userRecipesService.insertRecipe(db, newRecipe)
