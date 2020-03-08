@@ -15,6 +15,7 @@ exports.up = function (knex) {
       return knex
     .createTable('userrecipes', function (table) {
     table.increments();
+    table.uuid('id'),
     table.string('thumbnail');
     table.string('title');
     table.string('ingredients');
