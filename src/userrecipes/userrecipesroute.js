@@ -46,9 +46,6 @@ recipesRouter
   let newRecipe = {ingredients, title}
   userRecipesService.updateRecipe(db, id, newRecipe)
     .then(recipes=>{
-      if(recipes == undefined){
-        res.status(404).json({error: "NOT FOUND"})
-      }
       res.status(200).json(recipes)
     })
     .catch(next)
