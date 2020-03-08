@@ -53,17 +53,6 @@ recipesRouter
   const db = req.app.get('db');
   const {id} = req.params; 
   const {ingredients, title} = req.body;
-  if (!title){
-     res
-      .status(400)
-      .send ('title does not exist');
-  }
-  if (!ingredients){
-     res
-      .status(400)
-      .send ('ingredients does not exist');
-  }
-
   let newRecipe = {ingredients, title}
   userRecipesService.updateRecipe(db, id, newRecipe)
     .then(recipes=>{
