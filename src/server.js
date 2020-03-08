@@ -7,7 +7,7 @@ knex.schema.createTable('userrecipes', function (table) {
   table.string('name');
 })
 Outputs:
-create table `userrecipes` (`id` int unsigned not null auto_increment primary key, `thumbnail` varchar(255), `title` varchar(255),  `ingredients` varchar(255), `recipeurl` varchar(255), 
+create table `userrecipes` (`id` int unsigned not null auto_increment primary key, `thumbnail` varchar(255), `title` varchar(255),  `ingredients` varchar(255), `recipeurl` varchar(255) 
 const db = knex({
   client: 'pg',
   connection: DB_URL,
