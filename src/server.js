@@ -4,10 +4,12 @@ const { PORT, DB_URL } = require('./config')
 
 knex.schema.createTable('userrecipes', function (table) {
   table.increments();
-  table.string('name');
+  table.string('thumbnail');
+  table.string('title');
+  table.string('ingredients');
+    table.string('recipeurl');
+
 })
-Outputs:
-create table `userrecipes` (`id` int unsigned not null auto_increment primary key, `thumbnail` varchar(255), `title` varchar(255),  `ingredients` varchar(255), `recipeurl` varchar(255) 
 const db = knex({
   client: 'pg',
   connection: DB_URL,
