@@ -19,7 +19,7 @@ exports.up = function (knex) {
   table.string('title');
   table.string('ingredients');
     table.string('recipeurl');
-  })
+  }
  })
 };
 
