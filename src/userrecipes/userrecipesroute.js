@@ -42,7 +42,7 @@ recipesRouter
 .put(jsonBodyParser, (req, res, next)=>{
   const db = req.app.get('db');
   const {id} = req.params; 
-  const {ingredients, title} = req.body;
+  const {thumbnail, title, ingredients, recipeurl} = req.body;
   let newRecipe = {ingredients, title}
   userRecipesService.updateRecipe(db, id, newRecipe)
     .then(recipes=>{
