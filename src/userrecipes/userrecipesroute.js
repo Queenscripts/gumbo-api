@@ -15,7 +15,7 @@ recipesRouter
   .all(requireAuth)
   .get((req, res, next) => {
       const db = req.app.get('db');
-      userRecipesService.getAllRecipes(db)
+      userRecipesService.getAlluserrecipes(db)
       .then(recipes => {
         res.status(200).json(recipes)
       })
