@@ -37,17 +37,15 @@ recipesRouter
   })
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
-    let img = upload(req, res, function (err) {
+    let thumbnail = upload(req, res, function (err) {
            if (err instanceof multer.MulterError) {
                return res.status(500).json(err)
            } else if (err) {
                return res.status(500).json(err)
            }
-     img ={thumbnail}
     const {thumbnail,title, ingredients, recipeurl } = req.body;
     let newRecipe = {thumbnail, ingredients, title}
     userRecipesService.insertRecipe(db, newRecipe)  
-    
       return res.status(200).send(req.file)
 
     })
