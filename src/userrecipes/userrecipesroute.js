@@ -1,9 +1,7 @@
 'use strict';
 const express = require('express');
 const userRecipesService = require('./userrecipesservice');
-const multer  = require('multer')
-const path = require("path");
-const fileUpload = require('express-fileupload');
+
 const {
   requireAuth
 } = require('../middleware/jwt-auth')
@@ -11,18 +9,7 @@ const {
 const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
 
-const storage = multer.diskStorage({
-    destination: "../",
-   filename: function(req, file, cb){
-      cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
-   }
-});
 
-// "./public/uploads/",
-//    filename: function(req, file, cb){
-//       cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
-//    }
-// });
   //First, get request to fetch recipe data  
 recipesRouter
   .route('/')
@@ -39,12 +26,8 @@ recipesRouter
   })
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
-    let thumbnail = req.files.recipeimage;
-  
-    uploadPath = __dirname + thumbnail.name;
-  
-    const {title, ingredients, recipeurl } = req.body;
-    let newRecipe = {recipeurl, ingredients, title}
+    const {thumbnail,title, ingredients, recipeurl } = req.body;
+    let newRecipe = {thumbnail,recipeurl, ingredients, title}
 
     userRecipesService.insertRecipe(db, newRecipe)
     .then(recipes=>{
