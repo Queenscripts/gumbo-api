@@ -41,7 +41,8 @@ recipesRouter
     const db = req.app.get('db');
     let thumbnail = req.files.recipeimage;
   
-
+    uploadPath= = __dirname + thumbnail.name;
+  
     const {title, ingredients, recipeurl } = req.body;
     let newRecipe = {recipeurl, ingredients, title}
 
