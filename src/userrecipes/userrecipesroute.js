@@ -27,8 +27,7 @@ recipesRouter
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
     const {thumbnail,title, ingredients, recipeurl } = req.body;
-    let newRecipe = {thumbnail,recipeurl, ingredients, title}
-
+    let newRecipe = {thumbnail, ingredients, title}
     userRecipesService.insertRecipe(db, newRecipe)
     .then(recipes=>{
       res.status(201).json(recipes)
