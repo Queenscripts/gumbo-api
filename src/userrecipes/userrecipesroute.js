@@ -12,20 +12,17 @@ const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'assets/uploads')
-    },
-    filename: function (req, file, cb) {
-        // You could rename the file name
-        // cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-
-        // You could use the original name
-        cb(null, file.originalname)
-    }
+    destination: f"./public/uploads/",
+   filename: function(req, file, cb){
+      cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+   }
 });
 
-var upload = multer({storage: storage})
-
+"./public/uploads/",
+   filename: function(req, file, cb){
+      cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+   }
+});
   //First, get request to fetch recipe data  
 recipesRouter
   .route('/')
@@ -40,7 +37,7 @@ recipesRouter
         next
       )
   })
-  .post(jsonBodyParser, (req, res, next) => {
+  .post(jsonBodyParser, upload(req, res, next) => {
     const db = req.app.get('db');
     let thumbnail = req.files.recipeimage;
     thumbnail.mv('/api/userrecipes/images', function(err) {
