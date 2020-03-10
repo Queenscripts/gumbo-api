@@ -3,7 +3,7 @@ const express = require('express');
 const userRecipesService = require('./userrecipesservice');
 const multer  = require('multer')
 const path = require("path");
-
+const fileUpload = require('express-fileupload');
 const {
   requireAuth
 } = require('../middleware/jwt-auth')
@@ -40,10 +40,7 @@ recipesRouter
   .post(jsonBodyParser, upload(req, res, next) => {
     const db = req.app.get('db');
     let thumbnail = req.files.recipeimage;
-    thumbnail.mv('/api/userrecipes/images', function(err) {
-    console.log("Request file ---", req.file)
-    res.send('File uploaded!');
-  });
+  
 
     const {title, ingredients, recipeurl } = req.body;
     let newRecipe = {recipeurl, ingredients, title}
