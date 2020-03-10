@@ -46,6 +46,7 @@ recipesRouter
            } else if (err) {
                return res.status(500).json(err)
            }
+      console.log("REQ", req.file)
       return res.status(200).send(req.file)
 
     })
