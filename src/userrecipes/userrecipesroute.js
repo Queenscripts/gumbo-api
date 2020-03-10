@@ -31,7 +31,7 @@ recipesRouter
 
     userRecipesService.insertRecipe(db, newRecipe)
     .then(recipes=>{
-      res.status(201).json({image: req.file.path}, recipes)
+      res.status(201).json(recipes))
     })
     .catch(next)
   });
