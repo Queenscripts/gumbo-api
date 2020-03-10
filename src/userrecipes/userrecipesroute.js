@@ -12,17 +12,17 @@ const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
 
 const storage = multer.diskStorage({
-    destination: f"./public/uploads/",
+    destination: f"../",
    filename: function(req, file, cb){
       cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
    }
 });
 
-"./public/uploads/",
-   filename: function(req, file, cb){
-      cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
-   }
-});
+// "./public/uploads/",
+//    filename: function(req, file, cb){
+//       cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+//    }
+// });
   //First, get request to fetch recipe data  
 recipesRouter
   .route('/')
