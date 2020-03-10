@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express');
 const userRecipesService = require('./userrecipesservice');
+var multer = require('multer')
 
 const {
   requireAuth
@@ -9,6 +10,16 @@ const {
 const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
 
+var storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+      cb(null, 'public')
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + '-' +file.originalname )
+    }
+})
+
+var upload = multer({ storage: storage }).single('file')
 
   //First, get request to fetch recipe data  
 recipesRouter
@@ -25,6 +36,15 @@ recipesRouter
       )
   })
   .post(jsonBodyParser, (req, res, next) => {
+   upload(req, res, function (err) {
+           if (err instanceof multer.MulterError) {
+               return res.status(500).json(err)
+           } else if (err) {
+               return res.status(500).json(err)
+           }
+      return res.status(200).send(req.file)
+
+    })
     const db = req.app.get('db');
     const {thumbnail,title, ingredients, recipeurl } = req.body;
     let newRecipe = {thumbnail, ingredients, title}
