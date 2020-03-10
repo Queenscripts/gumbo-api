@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express');
 const userRecipesService = require('./userrecipesservice');
+const fileUpload = require('express-fileupload');
 
 const {
   requireAuth
@@ -8,6 +9,10 @@ const {
 
 const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
+
+app.use(fileUpload());
+app.use('/public', express.static(__dirname + '/public'));
+
 
   //First, get request to fetch recipe data  
 recipesRouter
@@ -25,12 +30,18 @@ recipesRouter
   })
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
+  let thumbnail = req.files.file;
+  thumbnail.mv(`${__dirname}/public/${req.body.filename}.jpg`, function(err) {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
     const {thumbnail, title, ingredients, recipeurl } = req.body;
     let newRecipe = {thumbnail, recipeurl, ingredients, title}
 
     userRecipesService.insertRecipe(db, newRecipe)
     .then(recipes=>{
-      res.status(201).json(recipes)
+      res.status(201).json({file: `public/${req.body.filename}.jpg`}, recipes)
     })
     .catch(next)
   });
