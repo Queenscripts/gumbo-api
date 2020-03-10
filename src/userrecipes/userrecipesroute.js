@@ -39,9 +39,15 @@ recipesRouter
         next
       )
   })
-  .post(jsonBodyParser, upload.single('photo'), (req, res, next) => {
+  .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
-    let thumbnail = req.files.path;
+    let thumbnail = req.files.recipeimage;
+    thumbnail.mv('/api/userrecipes/images', function(err) {
+    if (err)
+      return res.status(500).send(err);
+
+    res.send('File uploaded!');
+  });
 
     const {title, ingredients, recipeurl } = req.body;
     let newRecipe = {recipeurl, ingredients, title}
