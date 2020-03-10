@@ -42,6 +42,7 @@ recipesRouter
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
     let thumbnail = req.files.recipeimage;
+    console.log('THUMB", thumbnail)
     thumbnail.mv('/api/userrecipes/images', function(err) {
     if (err)
       return res.status(500).send(err);
