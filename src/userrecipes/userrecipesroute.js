@@ -37,7 +37,7 @@ recipesRouter
         next
       )
   })
-  .post(jsonBodyParser, upload(req, res, next) => {
+  .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
     let thumbnail = req.files.recipeimage;
   
