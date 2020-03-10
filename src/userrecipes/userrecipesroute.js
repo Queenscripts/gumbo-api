@@ -11,9 +11,6 @@ const {
 const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
 
-app.use(fileUpload());
-app.use('/public', express.static(__dirname + '/public'));
-
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'assets/uploads')
