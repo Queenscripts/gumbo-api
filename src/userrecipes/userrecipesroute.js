@@ -2,6 +2,7 @@
 const express = require('express');
 const userRecipesService = require('./userrecipesservice');
 const fileUpload = require('express-fileupload');
+const multer  = require('multer')
 
 const {
   requireAuth
@@ -13,6 +14,20 @@ const jsonBodyParser = express.json()
 app.use(fileUpload());
 app.use('/public', express.static(__dirname + '/public'));
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'assets/uploads')
+    },
+    filename: function (req, file, cb) {
+        // You could rename the file name
+        // cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+
+        // You could use the original name
+        cb(null, file.originalname)
+    }
+});
+
+var upload = multer({storage: storage})
 
   //First, get request to fetch recipe data  
 recipesRouter
@@ -28,20 +43,16 @@ recipesRouter
         next
       )
   })
-  .post(jsonBodyParser, (req, res, next) => {
+  .post(jsonBodyParser, upload.single('photo'), (req, res, next) => {
     const db = req.app.get('db');
-  let thumbnail = req.files.file;
-  thumbnail.mv(`${__dirname}/public/${req.body.filename}.jpg`, function(err) {
-    if (err) {
-      return res.status(500).send(err);
-    }
+    let thumbnail = req.files.path;
 
     const {thumbnail, title, ingredients, recipeurl } = req.body;
     let newRecipe = {thumbnail, recipeurl, ingredients, title}
 
     userRecipesService.insertRecipe(db, newRecipe)
     .then(recipes=>{
-      res.status(201).json({file: `public/${req.body.filename}.jpg`}, recipes)
+      res.status(201).json({image: req.file.path}, recipes)
     })
     .catch(next)
   });
