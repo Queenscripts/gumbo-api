@@ -36,7 +36,11 @@ recipesRouter
       )
   })
   .post(jsonBodyParser, (req, res, next) => {
-   upload(req, res, function (err) {
+    const db = req.app.get('db');
+    const {thumbnail,title, ingredients, recipeurl } = req.body;
+    let newRecipe = {thumbnail, ingredients, title}
+    userRecipesService.insertRecipe(db, newRecipe)  
+    upload(req, res, function (err) {
            if (err instanceof multer.MulterError) {
                return res.status(500).json(err)
            } else if (err) {
@@ -45,10 +49,6 @@ recipesRouter
       return res.status(200).send(req.file)
 
     })
-    const db = req.app.get('db');
-    const {thumbnail,title, ingredients, recipeurl } = req.body;
-    let newRecipe = {thumbnail, ingredients, title}
-    userRecipesService.insertRecipe(db, newRecipe)
     .then(recipes=>{
       res.status(201).json(recipes)
     })
