@@ -24,7 +24,7 @@ var upload = multer({ storage: storage }).single('file')
   //First, get request to fetch recipe data  
 recipesRouter
   .route('/')
-  .all(requireAuth)
+//   .all(requireAuth)
   .get((req, res, next) => {
       const db = req.app.get('db');
       userRecipesService.getAlluserrecipes(db)
