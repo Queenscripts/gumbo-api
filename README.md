@@ -3,8 +3,7 @@
 Search the Gumbo API databse for recipes, as well as recipes users have submitted via the Gumbo app. 
 
 + [Live App](https://gumbo.now.sh/)
-+ [Client R
-epo](https://github.com/QueenShabazz/gumbo)
++ [Client Repo](https://github.com/QueenShabazz/gumbo)
 + [Server Repo](https://github.com/QueenShabazz/gumbo-api/)
 
 ## Set up
@@ -27,6 +26,7 @@ Edit the contents of the package.json to use NEW-PROJECT-NAME instead of "name":
 /api/auth
 /api/users
 /api/recipes
+/api/userrecipes
 ```
 
 ### Endpoint Response Examples:
@@ -66,6 +66,26 @@ Edit the contents of the package.json to use NEW-PROJECT-NAME instead of "name":
     "password": "$2a$12$aqsYmjbO1.RPMhOVvVVbpO5vcJMss3I631fGstqRalnpaAVlHdUni",
     "date_created": "2020-01-30T01:13:51.110Z",
     "date_modified": null
+    }
+]
+```
+
+/api/userrecipes
+```
+[
+    {
+    "id": 16,
+    "thumbnail": "https://bigoven-res.cloudinary.com/image/upload/w_300,c_fill,h_250/omelet-2250003.jpg",
+    "title": "Eggplant Omelet with Coriander and Caraway",
+    "ingredients": "caraway seed, coriander, eggplant, eggs, garlic, lemon, olive oil, onions, black pepper, salt",
+    "recipeurl": "http://www.epicurious.com/recipes/food/views/Eggplant-Omelet-with-Coriander-and-Caraway-306"
+    },
+     {
+    "id": 126,
+    "thumbnail": "https://bigoven-res.cloudinary.com/image/upload/w_300,c_fill,h_250/omelet-2250003.jpg",
+    "title": "Eggplant Casserole",
+    "ingredients": "eggplant, olive oil, onions, black pepper, salt",
+    "recipeurl": "http://www.epicurious.com/recipes/food/views/Eggplant-Omelet-with-Coriander-and-Caraway-306"
     }
 ]
 ```
