@@ -47,7 +47,7 @@ recipesRouter
     const db = req.app.get('db');
     let thumbnail = req.files.path;
 
-    const {thumbnail, title, ingredients, recipeurl } = req.body;
+    const {title, ingredients, recipeurl } = req.body;
     let newRecipe = {recipeurl, ingredients, title}
 
     userRecipesService.insertRecipe(db, newRecipe)
