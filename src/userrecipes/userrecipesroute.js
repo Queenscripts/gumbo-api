@@ -2,6 +2,7 @@
 const express = require('express');
 const userRecipesService = require('./userrecipesservice');
 const multer  = require('multer')
+const path = require("path");
 
 const {
   requireAuth
@@ -42,11 +43,8 @@ recipesRouter
   .post(jsonBodyParser, (req, res, next) => {
     const db = req.app.get('db');
     let thumbnail = req.files.recipeimage;
-    console.log('THUMB", thumbnail)
     thumbnail.mv('/api/userrecipes/images', function(err) {
-    if (err)
-      return res.status(500).send(err);
-
+    console.log("Request file ---", req.file)
     res.send('File uploaded!');
   });
 
