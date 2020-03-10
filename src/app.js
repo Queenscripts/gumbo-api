@@ -9,6 +9,7 @@ const usersRouter = require('./users/users-router')
 const recipesRouter = require('./recipes/recipes-router')
 const userrecipesRouter = require('./userrecipes/userrecipesroute')
 const fileUpload = require('express-fileupload');
+app.use(fileUpload());
 
 // const recipesApi = require('./recipes-api/recipes-api-router')
 
@@ -23,7 +24,6 @@ app.use(morgan((NODE_ENV === 'production')
 app.use(cors())
 app.use(express.json())
 
-app.use(fileUpload());
 app.use('/public', express.static(__dirname + '/public'));
 
 app.use('/api/auth', authRouter)
