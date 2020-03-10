@@ -23,6 +23,7 @@
   "author": "Queen Shabazz",
   "license": "ISC",
   "dependencies": {
+     "express-fileupload": "^0.1.2",
     "multer": "^1.4.2",
     "audit": "0.0.6",
     "bcryptjs": "^2.4.3",
@@ -42,6 +43,7 @@
     "xss": "^1.0.6"
   },
   "devDependencies": {
+     "express-fileupload": "^0.1.2",
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
     "postgrator-cli": "^3.2.0"
