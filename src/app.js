@@ -22,6 +22,9 @@ app.use(morgan((NODE_ENV === 'production')
 app.use(cors())
 app.use(express.json())
 
+app.use(fileUpload());
+app.use('/public', express.static(__dirname + '/public'));
+
 app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/recipes', recipesRouter)
