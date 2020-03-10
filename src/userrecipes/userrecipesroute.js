@@ -1,7 +1,6 @@
 'use strict';
 const express = require('express');
 const userRecipesService = require('./userrecipesservice');
-const fileUpload = require('express-fileupload');
 const multer  = require('multer')
 
 const {
