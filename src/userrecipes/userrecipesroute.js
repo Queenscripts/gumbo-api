@@ -43,17 +43,17 @@ recipesRouter
            } else if (err) {
                return res.status(500).json(err)
            }
-    const {thumbnail,title, ingredients, recipeurl } = req.body;
-    let newRecipe = {thumbnail, ingredients, title}
-    userRecipesService.insertRecipe(db, newRecipe)  
-      return res.status(200).send(req.file)
-
-    })
+      })
+    const {title, ingredients, recipeurl}  = req.body;
+    req.body[thumbnail]
+    console.log(req.body)
+    userRecipesService.insertRecipe(db, req.body)  
     .then(recipes=>{
-      res.status(201).json(recipes)
+      console.log('REC', recipes)
+      res.json(recipes).send(req.file).status(201)
     })
     .catch(next)
-  });
+  })
 
 
 recipesRouter

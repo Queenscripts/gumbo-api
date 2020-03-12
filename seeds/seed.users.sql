@@ -1,5 +1,7 @@
 -- first remove any data that may be present
--- TRUNCATE  users RESTART IDENTITY CASCADE;
+TRUNCATE TABLE users 
+
+-- RESTART IDENTITY CASCADE;
 
 -- insert some suppliers
 INSERT INTO users
