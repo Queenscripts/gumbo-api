@@ -1,8 +1,6 @@
 'use strict';
 const express = require('express');
 const userRecipesService = require('./userrecipesservice');
-// var multer = require('multer')
-const path = require('path');
 
 const {
   requireAuth
@@ -18,27 +16,19 @@ recipesRouter
       const db = req.app.get('db');
       userRecipesService.getAlluserrecipes(db)
       .then(recipes => {
-        res.status(200).json(recipes).send(req.file)
+        res.status(200).json(recipes)
       })
       .catch(
         next
       )
   })
-  .post((req, res, next) => {
-    console.log('DIRECT',__dirname )
-    let img = req.files.recipeimage
-    let thumbnail = path.join((__dirname + '/public/') + img.name);
-        const db = req.app.get('db');
-        img.mv(thumbnail, function(err) {
-          if (err) {
-            return res.status(500).send(err);
-          }
-        })
-        const {title, ingredients, recipeurl}  = req.body;
+  .post(jsonBodyParser,(req, res, next) => {
+      const db = req.app.get('db');
+        const {thumbnail,title, ingredients, recipeurl}  = req.body;
         let newRecipe = {recipeurl, ingredients, title, thumbnail}
         userRecipesService.insertRecipe(db, newRecipe)  
         .then( recipes=>{
-          res.json(recipes).status(201)
+          res.status(201).json(recipes)
         })
         .catch(next)
       

@@ -8,24 +8,6 @@ const db = knex({
   connection: DB_URL,
 })
 
-exports.up = function (knex) {
-  return knex.schema
-  .hasTable('userrecipes')
-  .then(function(exists){
-   if(!exists){
-      return knex
-    .createTable('userrecipes', function (table) {
-    table.increments();
-    table.uuid('id'),
-    table.string('thumbnail');
-    table.string('title');
-    table.string('ingredients');
-    table.string('recipeurl');
-    })
-  }
- })
-};
-
 app.set('db', db)
 
 app.listen(PORT, () => {
