@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const userRecipesService = require('./userrecipesservice');
-var multer = require('multer')
+const path = require('path');
 
 const {
   requireAuth
@@ -9,17 +9,6 @@ const {
 
 const recipesRouter = express.Router()
 const jsonBodyParser = express.json()
-
-var storage = multer.diskStorage({
-      destination: function (req, file, cb) {
-      cb(null, 'public')
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + '-' +file.originalname )
-    }
-})
-
-var upload = multer({ storage: storage }).single('file')
 
   //First, get request to fetch recipe data  
 recipesRouter
@@ -29,30 +18,30 @@ recipesRouter
       const db = req.app.get('db');
       userRecipesService.getAlluserrecipes(db)
       .then(recipes => {
-        res.status(200).json(recipes)
+        res.status(200).json(recipes).send(req.file)
       })
       .catch(
         next
       )
   })
-  .post(jsonBodyParser, (req, res, next) => {
-    const db = req.app.get('db');
-    let thumbnail = upload(req, res, function (err) {
-           if (err instanceof multer.MulterError) {
-               return res.status(500).json(err)
-           } else if (err) {
-               return res.status(500).json(err)
-           }
-      })
-    const {title, ingredients, recipeurl}  = req.body;
-    req.body[thumbnail]
-    console.log(req.body)
-    userRecipesService.insertRecipe(db, req.body)  
-    .then(recipes=>{
-      console.log('REC', recipes)
-      res.json(recipes).send(req.file).status(201)
-    })
-    .catch(next)
+  .post((req, res, next) => {
+    console.log('DIRECT',__dirname )
+    let img = req.files.recipeimage
+    let thumbnail = path.join((__dirname + '/public/gumbo/public') + img.name);
+        const db = req.app.get('db');
+        img.mv(thumbnail, function(err) {
+          if (err) {
+            return res.status(500).send(err);
+          }
+        })
+        const {title, ingredients, recipeurl}  = req.body;
+        let newRecipe = {recipeurl, ingredients, title, thumbnail}
+        userRecipesService.insertRecipe(db, newRecipe)  
+        .then( recipes=>{
+          res.json(recipes).status(201)
+        })
+        .catch(next)
+      
   })
 
 
