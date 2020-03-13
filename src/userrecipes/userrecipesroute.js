@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express');
 const userRecipesService = require('./userrecipesservice');
+// var multer = require('multer')
 const path = require('path');
 
 const {
@@ -13,7 +14,6 @@ const jsonBodyParser = express.json()
   //First, get request to fetch recipe data  
 recipesRouter
   .route('/')
-//   .all(requireAuth)
   .get((req, res, next) => {
       const db = req.app.get('db');
       userRecipesService.getAlluserrecipes(db)
@@ -27,7 +27,7 @@ recipesRouter
   .post((req, res, next) => {
     console.log('DIRECT',__dirname )
     let img = req.files.recipeimage
-    let thumbnail = path.join((__dirname + '/public/gumbo/public') + img.name);
+    let thumbnail = path.join((__dirname + '/public/') + img.name);
         const db = req.app.get('db');
         img.mv(thumbnail, function(err) {
           if (err) {
