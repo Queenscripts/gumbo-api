@@ -53,7 +53,7 @@ recipesRouter
 .put(jsonBodyParser, (req, res, next)=>{
   const db = req.app.get('db');
   const {id} = req.params; 
-  const {ingredients, title} = req.body;
+  const {thumbnail, ingredients, title} = req.body;
   if (!title){
      res
       .status(400)
@@ -65,7 +65,7 @@ recipesRouter
       .send ('ingredients does not exist');
   }
 
-  let newRecipe = {ingredients, title}
+  let newRecipe = {thumbnail, ingredients, title}
   RecipesService.updateRecipe(db, id, newRecipe)
     .then(recipes=>{
       if(recipes == undefined){

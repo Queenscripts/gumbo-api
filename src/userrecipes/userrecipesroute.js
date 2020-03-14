@@ -37,12 +37,11 @@ recipesRouter
 
 recipesRouter
 .route("/:id")
-.all(requireAuth)
 .put(jsonBodyParser, (req, res, next)=>{
   const db = req.app.get('db');
   const {id} = req.params; 
   const {thumbnail, title, ingredients, recipeurl} = req.body;
-  let newRecipe = {ingredients, title}
+  let newRecipe = {thumbnail, title, ingredients, recipeurl}
   userRecipesService.updateRecipe(db, id, newRecipe)
     .then(recipes=>{
       res.status(200).json(recipes)
@@ -50,6 +49,7 @@ recipesRouter
     .catch(next)
 })
 .delete((req, res, next)=>{
+  
   const db = req.app.get('db');
   const {id} = req.params;
   userRecipesService.deleteRecipe(db, id)
